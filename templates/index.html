@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌈 Habit Tracker</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">🌈 HabitFlow</div>
+      <nav>
+        <button class="nav-btn active" data-tab="dashboard">
+          📊 Dashboard
+        </button>
+        <button class="nav-btn" data-tab="tracker">✅ Tracker</button>
+        <button class="nav-btn" data-tab="stats">📈 Stats</button>
+      </nav>
+      <div class="month-picker">
+        <button id="prevMonth">‹</button>
+        <span id="monthLabel"></span>
+        <button id="nextMonth">›</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <!-- DASHBOARD TAB -->
+      <section id="tab-dashboard" class="tab active">
+        <h1>Today's Overview <span id="todayDate"></span></h1>
+
+        <div class="cards">
+          <div class="card card-purple">
+            <div class="card-icon">🎯</div>
+            <div class="card-val" id="statDoneToday">-</div>
+            <div class="card-label">Done Today</div>
+          </div>
+          <div class="card card-teal">
+            <div class="card-icon">📋</div>
+            <div class="card-val" id="statTotal">-</div>
+            <div class="card-label">Total Habits</div>
+          </div>
+          <div class="card card-pink">
+            <div class="card-icon">🔥</div>
+            <div class="card-val" id="statMonthLogs">-</div>
+            <div class="card-label">This Month</div>
+          </div>
+          <div class="card card-orange">
+            <div class="card-icon">💯</div>
+            <div class="card-val" id="statPct">-</div>
+            <div class="card-label">Today %</div>
+          </div>
+        </div>
+
+        <!-- Donut -->
+        <div class="donut-wrap">
+          <svg id="donutSvg" viewBox="0 0 200 200" width="200" height="200">
+            <circle
+              cx="100"
+              cy="100"
+              r="80"
+              fill="none"
+              stroke="#2d2d4e"
+              stroke-width="28"
+            />
+            <circle
+              id="donutArc"
+              cx="100"
+              cy="100"
+              r="80"
+              fill="none"
+              stroke="url(#donutGrad)"
+              stroke-width="28"
+              stroke-dasharray="502"
+              stroke-dashoffset="502"
+              stroke-linecap="round"
+              transform="rotate(-90 100 100)"
+            />
+            <defs>
+              <linearGradient id="donutGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a78bfa" />
+                <stop offset="100%" stop-color="#38bdf8" />
+              </linearGradient>
+            </defs>
+            <text
+              id="donutText"
+              x="100"
+              y="95"
+              text-anchor="middle"
+              fill="#fff"
+              font-size="26"
+              font-weight="700"
+            >
+              0/0
+            </text>
+            <text
+              x="100"
+              y="118"
+              text-anchor="middle"
+              fill="#aaa"
+              font-size="11"
+            >
+              habits done
+            </text>
+          </svg>
+        </div>
+
+        <!-- Today's habit quick-check -->
+        <h2>Today's Habits</h2>
+        <div id="todayHabits" class="today-list"></div>
+      </section>
+
+      <!-- TRACKER TAB -->
+      <section id="tab-tracker" class="tab">
+        <div class="tracker-header">
+          <h1>Monthly Tracker</h1>
+          <button id="openModal" class="btn-add">＋ Add Habit</button>
+        </div>
+        <div id="trackerGrid" class="tracker-scroll"></div>
+      </section>
+
+      <!-- STATS TAB -->
+      <section id="tab-stats" class="tab">
+        <h1>Statistics</h1>
+        <div id="statsCards" class="stats-list"></div>
+      </section>
+    </main>
+
+    <!-- ADD HABIT MODAL -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-box">
+        <h2>Add New Habit</h2>
+        <label>Name</label>
+        <input id="mName" placeholder="e.g. Drink Water" />
+        <label>Icon (emoji)</label>
+        <input id="mIcon" placeholder="💧" maxlength="4" />
+        <label>Color</label>
+        <div class="color-row">
+          <span
+            class="color-opt"
+            style="background: #a78bfa"
+            data-c="#a78bfa"
+          ></span>
+          <span
+            class="color-opt"
+            style="background: #38bdf8"
+            data-c="#38bdf8"
+          ></span>
+          <span
+            class="color-opt"
+            style="background: #34d399"
+            data-c="#34d399"
+          ></span>
+          <span
+            class="color-opt"
+            style="background: #fb923c"
+            data-c="#fb923c"
+          ></span>
+          <span
+            class="color-opt"
+            style="background: #f472b6"
+            data-c="#f472b6"
+          ></span>
+          <span
+            class="color-opt"
+            style="background: #facc15"
+            data-c="#facc15"
+          ></span>
+          <input
+            type="color"
+            id="mColor"
+            value="#a78bfa"
+            title="Custom color"
+          />
+        </div>
+        <label>Monthly Goal (days)</label>
+        <input id="mGoal" type="number" value="30" min="1" max="31" />
+        <div class="modal-btns">
+          <button id="saveHabit" class="btn-save">Save</button>
+          <button id="closeModal" class="btn-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>
