@@ -15,14 +15,18 @@ def init_db():
     db.row_factory = sqlite3.Row
     db.executescript('''
         CREATE TABLE IF NOT EXISTS habits (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            name        TEXT    NOT NULL,
-            icon        TEXT    DEFAULT '⭐',
-            color       TEXT    DEFAULT '#a78bfa',
-            goal        INTEGER DEFAULT 30,
-            frequency   TEXT    DEFAULT 'daily',
-            created_at  TEXT    DEFAULT (date('now'))
-        );
+            id               INTEGER PRIMARY KEY AUTOINCREMENT,
+            name             TEXT    NOT NULL,
+            icon             TEXT    DEFAULT '⭐',
+            color            TEXT    DEFAULT '#a78bfa',
+            goal             INTEGER DEFAULT 30,
+            frequency        TEXT    DEFAULT 'daily',
+            created_at       TEXT    DEFAULT (date('now')),
+            streak           INTEGER DEFAULT 0,
+            longest_streak   INTEGER DEFAULT 0, 
+            freeze_available INTEGER DEFAULT 1, 
+            freeze_date      TEXT    DEFAULT NULL                            
+        ); 
         CREATE TABLE IF NOT EXISTS logs (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
             habit_id    INTEGER NOT NULL,

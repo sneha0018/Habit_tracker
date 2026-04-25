@@ -119,6 +119,7 @@ function renderDashboard(s) {
       <div class="check">${done ? "✓" : ""}</div>
       <span class="habit-icon">${h.icon}</span>
       <span class="hname">${h.name}</span>
+      ${h.streak > 0 ? `<span class="streak-badge">🔥 ${h.streak}</span>` : ""}
       <button class="del-btn" data-id="${h.id}" title="Delete habit">🗑</button>`;
     div.onclick = async (e) => {
       if (e.target.classList.contains("del-btn")) return;
@@ -222,6 +223,7 @@ async function toggleLog(habitId, date) {
     logs = logs.filter((l) => !(l.habit_id === habitId && l.date === date));
   }
 
+  habits = await fetch("/api/habits").then((r) => r.json());
   const s = await fetch("/api/stats").then((r) => r.json());
   renderDashboard(s);
   renderTracker();

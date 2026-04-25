@@ -419,3 +419,11 @@ h2 {
     padding: 16px;
   }
 }
+.streak-badge {
+  background: linear-gradient(135deg, #fb923c, #facc15);
+  color: #000;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
