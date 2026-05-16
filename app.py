@@ -32,39 +32,29 @@ def get_habits():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['username']
-        password = generate_password_hash(request.form['password'])
+        fullname = request.form['fullname']
+        email = request.form['email']
+        password = request.form['password']
 
-        conn = sqlite3.connect('habits.db')
-        c = conn.cursor()
-
-        try:
-            c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-            conn.commit()
-        except:
-            return "User already exists"
+        # Example check
+        print(fullname, email, password)
 
         return redirect('/login')
 
     return render_template('signup.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
-        conn = sqlite3.connect('habits.db')
-        c = conn.cursor()
+        session['user_id'] = email
 
-        c.execute("SELECT * FROM users WHERE username = ?", (username,))
-        user = c.fetchone()
 
-        if user and check_password_hash(user[2], password):
-            session['user_id'] = user[0]
-            return redirect('/')
-        else:
-            return "Invalid credentials"
+        # Example check
+        print(email, password)
+
+        return redirect('/')
 
     return render_template('login.html')
 
@@ -254,4 +244,4 @@ def stats():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

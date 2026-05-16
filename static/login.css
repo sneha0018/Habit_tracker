@@ -1,0 +1,481 @@
+/* ============================================================
+   style.css — Upgraded Login UI
+   Features: animated orbs, glassmorphism card, social buttons,
+   custom checkbox, password toggle, loading state, full mobile
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --purple: #7c3aed;
+  --blue: #3b82f6;
+  --sky: #38bdf8;
+  --pink: #ec4899;
+  --text-1: #f8fafc;
+  --text-2: #cbd5e1;
+  --text-3: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-br: rgba(255, 255, 255, 0.12);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --radius: 16px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #1a1040, #0f172a);
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
+}
+
+/* ── Animated background orbs ── */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  animation: drift 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 380px;
+  height: 380px;
+  background: var(--purple);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--sky);
+  bottom: -80px;
+  right: -80px;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--pink);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -5s;
+  opacity: 0.15;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(30px, 20px) scale(1.08);
+  }
+}
+
+/* ── Container ── */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Auth card (glassmorphism) ── */
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 44px 40px;
+  border-radius: 28px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-br);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 24px 64px rgba(0, 0, 0, 0.5);
+  color: var(--text-1);
+  animation: cardIn 0.6s var(--ease) both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Brand ── */
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--purple), var(--sky));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.5);
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-1);
+}
+
+/* ── Headings ── */
+h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.5px;
+  /* Gradient text */
+  background: linear-gradient(135deg, #fff 30%, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 0.88rem;
+  margin-top: 6px;
+  margin-bottom: 28px;
+}
+
+/* ── Social buttons ── */
+.social-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-br);
+  background: var(--input-bg);
+  color: var(--text-1);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    transform 0.2s,
+    border-color 0.25s;
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.social-btn i {
+  font-size: 1rem;
+}
+.social-btn .fa-google {
+  color: #ea4335;
+}
+.social-btn .fa-github {
+  color: #fff;
+}
+
+/* ── Divider ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  color: var(--text-3);
+  font-size: 0.78rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--glass-br);
+}
+
+/* ── Input groups ── */
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-bottom: 7px;
+  padding-left: 2px;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap > i:first-child {
+  position: absolute;
+  left: 15px;
+  color: var(--text-3);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: color 0.25s;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding: 13px 44px;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-br);
+  background: var(--input-bg);
+  color: var(--text-1);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background 0.25s;
+}
+
+.input-wrap input::placeholder {
+  color: var(--text-3);
+}
+
+/* Focus glow */
+.input-wrap input:focus {
+  border-color: var(--blue);
+  background: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.input-wrap input:focus + .eye-btn {
+  color: var(--blue);
+}
+.input-wrap:focus-within > i:first-child {
+  color: var(--blue);
+}
+
+/* Password toggle button */
+.eye-btn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-3);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 4px;
+  transition: color 0.25s;
+  line-height: 1;
+}
+
+.eye-btn:hover {
+  color: var(--text-1);
+}
+
+/* ── Options row ── */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+}
+
+/* Custom checkbox */
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-2);
+  user-select: none;
+}
+
+.remember input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1.5px solid var(--glass-br);
+  background: var(--input-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.remember input:checked ~ .checkmark {
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  border-color: transparent;
+}
+
+.remember input:checked ~ .checkmark::after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 9px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.forgot-link {
+  color: var(--sky);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: #fff;
+}
+
+/* ── Submit button ── */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    var(--purple) 0%,
+    var(--blue) 60%,
+    var(--sky) 100%
+  );
+  background-size: 200% 200%;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.2px;
+  transition:
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease),
+    background-position 0.4s;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(59, 130, 246, 0.5);
+  background-position: right center;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Loading spinner inside button */
+.btn.loading i {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Switch text ── */
+.switch-text {
+  text-align: center;
+  margin-top: 26px;
+  color: var(--text-3);
+  font-size: 0.875rem;
+}
+
+.switch-text a {
+  color: var(--sky);
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+
+.switch-text a:hover {
+  color: #fff;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 32px 22px;
+    border-radius: 22px;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  .social-row {
+    gap: 8px;
+  }
+  .social-btn {
+    font-size: 0.82rem;
+    padding: 10px 8px;
+  }
+}
